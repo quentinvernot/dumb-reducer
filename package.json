@@ -1,0 +1,40 @@
+{
+  "name": "dumb-reducer",
+  "version": "1.0.0",
+  "description": "A generic redux reducer for simple cases",
+  "main": "src/index.js",
+  "license": "MIT",
+  "repository": "https://github.com/quentinvernot/dumb-reducer",
+  "scripts": {
+    "build": "babel -d src/ es/",
+    "lint:flow": "flow check",
+    "lint:js": "eslint es *.js",
+    "test": "mocha \"test/*.spec.js\" --compilers js:babel-register --recursive --full-trace --reporter=spec",
+    "prepare": "yarn lint:js && yarn lint:flow && yarn build"
+  },
+  "bin": {
+    "eslint": "./node_modules/.bin/eslint",
+    "flow": "./node_modules/.bin/flow",
+    "mocha": "./node_modules/.bin/mocha",
+    "webpack": "./node_modules/.bin/webpack"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-eslint": "8.0.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-register": "^6.24.1",
+    "chai": "^4.1.0",
+    "deep-freeze": "^0.0.1",
+    "eslint": "4.8.0",
+    "eslint-plugin-chai-expect": "^1.1.1",
+    "eslint-plugin-chai-friendly": "0.4.0",
+    "eslint-plugin-flowtype": "^2.35.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-mocha-no-only": "^0.0.5",
+    "flow": "^0.2.3",
+    "flow-bin": "0.56.0",
+    "mocha": "^3.4.2"
+  }
+}

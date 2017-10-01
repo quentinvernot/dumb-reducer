@@ -1,0 +1,27 @@
+extends:
+  - eslint:recommended
+  - plugin:flowtype/recommended
+parser: babel-eslint
+
+
+rules:
+  chai-expect/missing-assertion: 2
+  chai-expect/terminating-properties: 1
+  chai-friendly/no-unused-expressions: 2
+  mocha-no-only/mocha-no-only:
+    - error
+  curly: 0
+  import/no-named-as-default: 0
+
+
+plugins:
+    - chai-expect
+    - chai-friendly
+    - mocha-no-only
+    - flowtype
+
+
+parserOptions:
+  ecmaVersion: 7
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
