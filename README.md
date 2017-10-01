@@ -1,4 +1,5 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/quentinvernot/dumbReducer/master/LICENSE)
+[![NPM version](https://img.shields.io/npm/v/dumb-reducer.svg)](https://www.npmjs.com/package/dumb-reducer)
 
 
 ## What is this?
@@ -88,7 +89,7 @@ case 'LIST_ADD_ELEMENT':
 };
 ```
 
-There are solutions: you could have a substate just for the list, where elements have an id and are forwarded as `[element.id]: element`, you could also give the whole list as a parameter of the action, and let that handle the logic, or, you if you really need the dumbReducer and more complicated logic in the same substate, you could use this:
+There are solutions: you could have a substate just for the list, where elements have an id and are forwarded as `[element.id]: element`, you could also give the whole list as a parameter of the action, and let that handle the logic, or, if you really need the dumbReducer and more complicated logic in the same substate, you could use this:
 
 ```js
 import makeDumbReducer from 'dumbReducer';
