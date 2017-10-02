@@ -4,7 +4,7 @@
 
 ## What is this?
 
-It's a reducer factory function that creates simple redux action handlers for any action beginning with a set `prefix`, these handlers would simply put the action payloads into the state. An optional `initialState` can be set if needed, as well as `specialReducers` for other cases (though you may want to create normal normal reducers there).
+It's a reducer factory function that creates simple redux action handlers for any action beginning with a set `prefix`, these handlers will simply put the action payloads into the state. An optional `initialState` can be set if needed, as well as `specialReducers` for other cases (though you may want to create normal reducers there).
 
 ## How do I use it?
 
