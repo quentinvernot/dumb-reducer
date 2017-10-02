@@ -1,0 +1,7 @@
+node_modules
+test
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore
+README.md
