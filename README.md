@@ -37,7 +37,7 @@ const submitResult = (error) => ({
 
 You would also need reducers to handle these actions:
 ```js
-export const formReducer = (state = { isFetching: false }, action = {}) => {
+export default (state = { isFetching: false }, action = {}) => {
   switch (action.type) {
     case 'FORM_SUBMIT_START':
       return {
