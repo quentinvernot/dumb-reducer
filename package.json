@@ -18,6 +18,13 @@
     "flow": "./node_modules/.bin/flow",
     "mocha": "./node_modules/.bin/mocha"
   },
+  "files": [
+    "es",
+    "README.md",
+    "LICENSE",
+    "lib",
+    ".flowconfig"
+  ],
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "8.0.1",
