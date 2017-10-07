@@ -3,6 +3,7 @@
   "version": "1.0.3",
   "description": "A generic redux reducer for simple cases",
   "main": "lib/index.js",
+  "module": "es/index.js",
   "license": "MIT",
   "repository": "https://github.com/quentinvernot/dumb-reducer",
   "scripts": {
