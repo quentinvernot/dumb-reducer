@@ -1,4 +1,5 @@
-src/
+es/
+lib/
 node_modules/
 npm*.log
 yarn-error.log

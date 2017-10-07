@@ -2,11 +2,11 @@
   "name": "dumb-reducer",
   "version": "1.0.3",
   "description": "A generic redux reducer for simple cases",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "repository": "https://github.com/quentinvernot/dumb-reducer",
   "scripts": {
-    "build": "babel -d src/ es/",
+    "build": "cp -r src es/ && babel -d lib/ src/",
     "lint:flow": "flow check",
     "lint:js": "eslint es *.js",
     "test": "mocha \"test/*.spec.js\" --compilers js:babel-register --recursive --full-trace --reporter=spec",
@@ -15,8 +15,7 @@
   "bin": {
     "eslint": "./node_modules/.bin/eslint",
     "flow": "./node_modules/.bin/flow",
-    "mocha": "./node_modules/.bin/mocha",
-    "webpack": "./node_modules/.bin/webpack"
+    "mocha": "./node_modules/.bin/mocha"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
