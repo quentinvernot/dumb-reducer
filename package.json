@@ -7,9 +7,12 @@
   "license": "MIT",
   "repository": "https://github.com/quentinvernot/dumb-reducer",
   "scripts": {
-    "build": "cp -r src es/ && babel -d lib/ src/",
+    "build:es": "cp -r src es/",
+    "build:babel": "babel -d lib src",
+    "build:flow": "flow-copy-source src lib",
+    "build": "yarn build:es && yarn build:babel && yarn build:flow",
     "lint:flow": "flow check",
-    "lint:js": "eslint es *.js",
+    "lint:js": "eslint es/*.js",
     "test": "mocha \"test/*.spec.js\" --compilers js:babel-register --recursive --full-trace --reporter=spec",
     "prepare": "yarn lint:js && yarn lint:flow && yarn build"
   },
@@ -20,8 +23,6 @@
   },
   "files": [
     "es",
-    "README.md",
-    "LICENSE",
     "lib",
     ".flowconfig"
   ],
