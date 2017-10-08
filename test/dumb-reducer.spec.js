@@ -7,7 +7,7 @@ import makeDumbReducer from '../src';
 
 const initialState = deepFreeze({ a: 'a', b: { b1: 'b1', b2: 2 } });
 
-describe('dumbReducer', () => {
+describe('dumb-reducer', () => {
   it('should create a dumb reducer without problem', () => {
     makeDumbReducer('test_');
   });
