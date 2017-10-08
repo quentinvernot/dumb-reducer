@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": "https://github.com/quentinvernot/dumb-reducer",
   "scripts": {
-    "build:es": "cp -r src es/",
+    "build:es": "mkdir -p es && cp -r src/* es/",
     "build:babel": "babel -d lib src",
     "build:flow": "flow-copy-source src lib",
     "build": "yarn build:es && yarn build:babel && yarn build:flow",
