@@ -1,10 +1,10 @@
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/quentinvernot/dumbReducer/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/quentinvernot/dumb-reducer/master/LICENSE)
 [![NPM version](https://img.shields.io/npm/v/dumb-reducer.svg)](https://www.npmjs.com/package/dumb-reducer)
 
 
 ## What is this?
 
-It's a reducer factory function that creates simple redux action handlers for any action beginning with a set `prefix`, these handlers will simply put the action payloads into the state. An optional `initialState` can be set if needed, as well as `specialReducers` for other cases (though you may want to create normal reducers there).
+It's a reducer factory function that creates redux action handlers for any action beginning with a set `prefix`, these handlers will simply put the action payloads into the state. An optional `initialState` can be set if needed, as well as `specialReducers` for other cases (though you may want to create normal reducers there).
 
 ## How do I use it?
 
@@ -58,7 +58,7 @@ export default (state = { isFetching: false }, action = {}) => {
 
 This lib is here to replace that last part with this:
 ```js
-import makeDumbReducer from 'dumbReducer';
+import makeDumbReducer from 'dumb-reducer';
 
 export default makeDumbReducer(
   'FORM_SUBMIT_', // prefix
@@ -89,10 +89,10 @@ case 'LIST_ADD_ELEMENT':
 };
 ```
 
-There are solutions: you could have a substate just for the list, where elements have an id and are forwarded as `[element.id]: element`, you could also give the whole list as a parameter of the action, and let that handle the logic, or, if you really need the dumbReducer and more complicated logic in the same substate, you could use this:
+There are solutions: you could have a substate just for the list, where elements have an id and are forwarded as `[element.id]: element`, you could also give the whole list as a parameter of the action, and let that handle the logic, or, if you really need the dumb-reducer and more complicated logic in the same substate, you could use this:
 
 ```js
-import makeDumbReducer from 'dumbReducer';
+import makeDumbReducer from 'dumb-reducer';
 
 export default makeDumbReducer(
   'LIST_', // prefix
