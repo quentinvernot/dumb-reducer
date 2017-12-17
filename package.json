@@ -7,8 +7,8 @@
   "license": "MIT",
   "repository": "https://github.com/quentinvernot/dumb-reducer",
   "scripts": {
-    "build:es": "mkdir -p es && cp -r src/* es/",
-    "build:babel": "babel -d lib src",
+    "build:es": "BABEL_ENV=esnext babel -d es src",
+    "build:babel": "BABEL_ENV=es5 babel -d lib src",
     "build:flow": "flow-copy-source src lib",
     "build": "yarn build:es && yarn build:babel && yarn build:flow",
     "lint:flow": "flow check",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "8.0.1",
+    "babel-plugin-syntax-object-rest-spread": "^6.13.0",
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
     "babel-preset-env": "^1.6.0",
