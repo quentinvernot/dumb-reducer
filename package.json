@@ -44,9 +44,7 @@
     "eslint-plugin-mocha-no-only": "^0.0.5",
     "flow": "^0.2.3",
     "flow-bin": "^0.61.0",
+    "flow-copy-source": "^1.2.1",
     "mocha": "^4.0.1"
-  },
-  "dependencies": {
-    "flow-copy-source": "^1.2.1"
   }
 }
