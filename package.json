@@ -15,11 +15,6 @@
     "test": "BABEL_ENV=es5 mocha \"test/*.spec.js\" --require @babel/register --recursive --full-trace --reporter=spec",
     "prepare": "yarn lint:js && yarn lint:flow && yarn test && yarn build"
   },
-  "bin": {
-    "eslint": "./node_modules/.bin/eslint",
-    "flow": "./node_modules/.bin/flow",
-    "mocha": "./node_modules/.bin/mocha"
-  },
   "files": [
     "es",
     "lib",
