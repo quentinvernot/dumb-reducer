@@ -1,5 +1,5 @@
 {
-  "plugins": ["@babel/transform-flow-strip-types"],
+  "plugins": ["@babel/plugin-transform-flow-comments"],
   "env": {
     "es5": {
       "presets": [

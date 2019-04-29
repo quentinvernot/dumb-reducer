@@ -9,8 +9,7 @@
   "scripts": {
     "build:es": "BABEL_ENV=esnext babel -d es src",
     "build:babel": "BABEL_ENV=es5 babel -d lib src",
-    "build:flow": "flow-copy-source src lib",
-    "build": "yarn build:es && yarn build:babel && yarn build:flow",
+    "build": "yarn build:es && yarn build:babel",
     "lint:flow": "flow check",
     "lint:js": "eslint es/*.js",
     "test": "BABEL_ENV=es5 mocha \"test/*.spec.js\" --require @babel/register --recursive --full-trace --reporter=spec",
@@ -29,7 +28,7 @@
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
-    "@babel/plugin-transform-flow-strip-types": "^7.4.4",
+    "@babel/plugin-transform-flow-comments": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
     "babel-eslint": "^8.0.3",
@@ -43,7 +42,6 @@
     "eslint-plugin-mocha-no-only": "1.1.0",
     "flow": "^0.2.3",
     "flow-bin": "0.98.1",
-    "flow-copy-source": "^1.2.1",
     "mocha": "^4.0.1"
   }
 }
