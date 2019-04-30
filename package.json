@@ -12,8 +12,9 @@
     "build": "yarn build:esnext && yarn build:es5",
     "lint:flow": "flow check",
     "lint:js": "eslint src/*.js",
+    "lint": "yarn lint:flow && yarn lint:js",
     "test": "BABEL_ENV=es5 mocha \"test/*.spec.js\" --require @babel/register --recursive --full-trace --reporter=spec",
-    "prepare": "yarn lint:js && yarn lint:flow && yarn test && yarn build"
+    "prepare": "yarn lint && yarn test && yarn build"
   },
   "files": [
     "es",
