@@ -7,9 +7,9 @@
   "license": "MIT",
   "repository": "https://github.com/quentinvernot/dumb-reducer",
   "scripts": {
-    "build:es": "BABEL_ENV=esnext babel -d es src",
-    "build:babel": "BABEL_ENV=es5 babel -d lib src",
-    "build": "yarn build:es && yarn build:babel",
+    "build:esnext": "BABEL_ENV=esnext babel -d es src",
+    "build:es5": "BABEL_ENV=es5 babel -d lib src",
+    "build": "yarn build:esnext && yarn build:es5",
     "lint:flow": "flow check",
     "lint:js": "eslint src/*.js",
     "test": "BABEL_ENV=es5 mocha \"test/*.spec.js\" --require @babel/register --recursive --full-trace --reporter=spec",
