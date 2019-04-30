@@ -4,32 +4,43 @@
 
 ## What is this?
 
-It's a reducer factory function that creates redux action handlers for any action beginning with a set `prefix`, these handlers will simply put the action payloads into the state. An optional `initialState` can be set if needed, as well as `specialReducers` for other cases (though you may want to create normal reducers there).
+It's a reducer factory function that creates redux action handlers for any action beginning with a set `prefix`, these handlers will put the action's payload directly into the state. An optional `initialState` can be set if needed, as well as a `subReducers` parameter that allows you to set special rules for special cases and behaves a bit like [combineReducers](https://redux.js.org/api/combinereducers#combinereducersreducers).
+
 
 ## How do I use it?
 
 Let's say you have this component:
 ```js
-const myForm = ({ submit, isFetching }) => (
+const myForm = ({ submit, isFetching, error, success }) => (
   <form onSubmit={submit}>
     ...
     <Button type="submit">
       Go!
       {isFetching && <Spinner />}
     </Button>
+    {error && 'An error occurred!'}
+    {success && 'A success occurred!'}
   </form>
 )
 ```
 
-The form's `onSubmit` callback would call these actions when needed to display or hide the Spinner element:
+The form's `onSubmit` callback would eventually call these actions to display or hide the Spinner element, the error, or the success state:
 ```js
 const submitStart = () => ({
-  type: 'FORM_SUBMIT_START',
+  type: 'formSubmit/start',
   isFetching: true,
+  error: null,
+  success: false,
 });
 
-const submitResult = (error) => ({
-  type: 'FORM_SUBMIT_RESULT',
+const submitSuccess = () => ({
+  type: 'formSubmit/success',
+  isFetching: false,
+  success: true,
+});
+
+const submitError = (error) => ({
+  type: 'formSubmit/error',
   isFetching: false,
   error,
 });
@@ -37,14 +48,20 @@ const submitResult = (error) => ({
 
 You would also need reducers to handle these actions:
 ```js
-export default (state = { isFetching: false }, action = {}) => {
+export default (state = { isFetching: false, error: null, success: false }, action = {}) => {
   switch (action.type) {
-    case 'FORM_SUBMIT_START':
+    case 'formSubmit/start':
       return {
         ...state,
         isFetching: action.isFetching,
       };
-    case 'FORM_SUBMIT_RESULT':
+    case 'formSubmit/success':
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        success: action.success,
+      };
+    case 'formSubmit/error':
       return {
         ...state,
         isFetching: action.isFetching,
@@ -56,53 +73,41 @@ export default (state = { isFetching: false }, action = {}) => {
 };
 ```
 
-This lib is here to replace that last part with this:
+You'll notice that, for the most part, we could just put whatever is in the action directly into the state without looking. This lib is here to replace that last example with this:
 ```js
 import makeDumbReducer from 'dumb-reducer';
 
 export default makeDumbReducer(
-  'FORM_SUBMIT_', // prefix
-  { isFetching: false } // initial state
+  'formSubmit', // prefix
+  { isFetching: false }, // initial state
 );
 ```
 
-That's it! It just forwards the payload.
+That's it! It forwards the payload. Done.
 
 
-## Limitations
+## Sub-reducers
 
-It really isn't ideal when you have to work on lists. Say you have to add an element to a list, your action would look like this:
-```js
-const addElement = (element) => ({
-  type: 'LIST_ADD_ELEMENT',
-  element,
-});
-```
-
-And then, the reducer would have to do something a bit complex, where the element is added to the list in the state instead of just replacing the key:
-```js
-case 'LIST_ADD_ELEMENT':
-  return {
-    ...state,
-    list: [...state.list, action.element],
-  };
-};
-```
-
-There are solutions: you could have a substate just for the list, where elements have an id and are forwarded as `[element.id]: element`, you could also give the whole list as a parameter of the action, and let that handle the logic, or, if you really need the dumb-reducer and more complicated logic in the same substate, you could use this:
-
+You may need to have different/more complex behaviours in parts of the state, `makeDumbReducer` allows you to set sub-reducers through the third parameter. Here is a an example with a sub-reducer that keeps an auto-incrementing counter of the number of times it was called:
 ```js
 import makeDumbReducer from 'dumb-reducer';
 
 export default makeDumbReducer(
-  'LIST_', // prefix
-  { list: [] }, // initial state
-  {
-    LIST_ADD_ELEMENT: (state, payload) => ({ ...state, list: [...state.list, action.element] })
-  } // special reducers
+  'myState', // prefix
+  { counter: 0 }, // initial state
+  { counter: (state, action) => state + 1 }, // sub-reducers
 );
+
+// the sub-reducer will be called if you dispatch any of these actions:
+{ type: 'myState/counter' };
+{ type: 'myState/counter/doStuff' };
 ```
 
-## Why?
+Note that sub-reducers only have access to (and return) the sub-state they are assigned to, which is very similar to [combineReducers](https://redux.js.org/api/combinereducers#combinereducersreducers).
 
-I needed an excuse to publish a package and see how to handle es6 and flow in those conditions (hence the completely overkill toolchain).
+
+## Quirks, and limitations
+
+* `<prefix>/stuff` is a valid action type, `<prefix>_stuff` and `<prefix>` are not. The `/` is expected.
+* You can put dumb-reducers in your dumb-reducer, although this doesn't work if you have a dynamically changing list objects (like `{ <user id>: <user> }`). You'll need something a bit smarter if you want to, say, update the email of a user in your local redux-user-cache without putting the whole user in the action.
+* It really isn't ideal when you have to work with arrays. It's usually better to use a dict with `{ <user id>: <user> }`, but if you really need to add/remove elements in a array in a dumb-reducer, you can use the `subReducers` param for the specific key that is an array.
