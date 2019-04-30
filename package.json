@@ -13,8 +13,8 @@
     "build": "yarn build:es && yarn build:babel && yarn build:flow",
     "lint:flow": "flow check",
     "lint:js": "eslint es/*.js",
-    "test": "mocha \"test/*.spec.js\" --compilers js:babel-register --recursive --full-trace --reporter=spec",
-    "prepare": "yarn lint:js && yarn lint:flow && yarn build"
+    "test": "BABEL_ENV=es5 mocha \"test/*.spec.js\" --compilers js:babel-register --recursive --full-trace --reporter=spec",
+    "prepare": "yarn lint:js && yarn lint:flow && yarn test && yarn build"
   },
   "bin": {
     "eslint": "./node_modules/.bin/eslint",
