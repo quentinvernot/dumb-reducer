@@ -26,7 +26,10 @@ function makeDumbReducer(prefix: string, initialState: Object = {}, subReducers:
       if (key)
         return { ...state, [key]: { ...subReducers[key](state[key], { type: unprefixedType, ...payload }) } };
 
-      return { ...state, ...payload };
+      const merged = { ...state, ...payload };
+      Object.keys(merged).forEach(key => merged[key] === undefined && delete merged[key]);
+
+      return merged;
     }
 
     return state;

@@ -42,6 +42,13 @@ describe('makeDumbReducer', () => {
     expect(reducer(initialState, action)).to.deep.equal({ ...initialState, c });
   });
 
+  it('should delete the key in the state if it\'s set as undefined in the action', () => {
+    const c = 'c';
+    const reducer = makeDumbReducer(goodPrefix, {...initialState, c});
+    const action = { type: 'goodPrefix/c', c: undefined };
+    expect(reducer(initialState, action)).to.deep.equal({ ...initialState });
+  });
+
   it('should run the given subreducer if the type matches', () => {
     const c = 'c';
     const subreducer = (state, payload) => ({ ...state, c: payload.c });
