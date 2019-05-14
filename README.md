@@ -54,6 +54,8 @@ export default (state = { isFetching: false, error: null, success: false }, acti
       return {
         ...state,
         isFetching: action.isFetching,
+        error: action.error,
+        success: action.success,
       };
     case 'formSubmit/success':
       return {
@@ -73,24 +75,24 @@ export default (state = { isFetching: false, error: null, success: false }, acti
 };
 ```
 
-You'll notice that, for the most part, we could just put whatever is in the action directly into the state without looking. This lib is here to replace that last example with this:
+You'll notice that, for the most part, we could just put whatever is in the action directly into the state without looking. This lib is here to replace that example with this:
 ```js
-import makeDumbReducer from 'dumb-reducer';
+import { makeDumbReducer } from 'dumb-reducer';
 
 export default makeDumbReducer(
   'formSubmit', // prefix
-  { isFetching: false }, // initial state
+  { isFetching: false, success: false, error: null }, // initial state
 );
 ```
 
-That's it! It forwards the payload. Done.
+That's it! It forwards the payload.
 
 
 ## Sub-reducers
 
 You may need to have different/more complex behaviours in parts of the state, `makeDumbReducer` allows you to set sub-reducers through the third parameter. Here is a an example with a sub-reducer that keeps an auto-incrementing counter of the number of times it was called:
 ```js
-import makeDumbReducer from 'dumb-reducer';
+import { makeDumbReducer } from 'dumb-reducer';
 
 export default makeDumbReducer(
   'myState', // prefix
@@ -116,9 +118,75 @@ dispatch({ type: 'myState/unset', isSet: undefined }); // state is now `{}`
 ```
 
 
+## Helper to prefix actions
+
+There's also a helper that automatically prefixes actions by adding the `type` and should help make action code smaller too:
+```js
+// Reducer
+import { makeDumbReducer } from 'dumb-reducer';
+
+export default makeDumbReducer(
+  'formSubmit', // prefix
+  { isFetching: false, success: false, error: null }, // initial state
+);
+
+
+// Actions
+import { prefixActions } from 'dumb-reducer';
+const actions = prefixActions(
+  'formSubmit', // prefix
+  {
+    start: () => ({ isFetching: true, error: null, success: false }),
+    success: () => ({ isFetching: false, success: true }),
+    error: error => ({ isFetching: true, error }),
+  }, // actions
+);
+
+// later...
+dispatch(actions.start());
+// will dispatch { type: 'formSubmit/start', isFetching: true, error: null, success: false }
+dispatch(actions.error(myError));
+// will dispatch { type: 'formSubmit/error', isFetching: false, error: myError }
+```
+
+
+This helper also accepts nested objects, useful with sub-reducers. Here is an example for a state containing a `hasSession` flag and a list of users like `{ <user id>: <user> }`:
+```js
+// reducer
+import { makeDumbReducer } from 'dumb-reducer';
+
+export default makeDumbReducer(
+  'myState', // prefix
+  { hasSession: false, users: {} }, // initial state
+  { users: makeDumbReducer('users') }, // sub-reducers, with a nested dumb-reducer for the users
+);
+
+
+// actions
+import { prefixActions } from 'dumb-reducer';
+const actions = prefixActions(
+  'myState', // prefix
+  {
+    setHasSession: hasSession => ({ hasSession }),
+    setAllUsers: users => ({ users }),
+    users: {
+      add: user => ({ [user.id]: user }),
+      remove: userId => ({ [userId]: undefined }),
+    },
+  }, // actions
+);
+
+// later...
+dispatch(actions.setHasSession(true));
+// will dispatch { type: 'myState/setHasSession', hasSession: true }
+dispatch(actions.users.add(selfUser));
+// will dispatch { type: 'myState/users/add', [selfUser.id]: selfUser }
+```
+
+
 ## Quirks and limitations
 
 * `<prefix>/stuff` is a valid action type, `<prefix>_stuff` and `<prefix>` are not. The `/` is expected.
 * You can put dumb-reducers in your dumb-reducer, although this expects a static state structure. It doesn't work if you have a dynamically changing list objects (like `{ <user id>: <user> }`). You'll need something a bit smarter if you want to, say, update the email of a user in your local redux-user-cache without putting the whole user in the action.
 * You can't have a key called `type` in the state without using sub-reducers.
-* It really isn't ideal when you have to work with arrays. It's usually better to use a dict with `{ <user id>: <user> }`, but if you really need to add/remove elements in a array in a dumb-reducer, you can use the `subReducers` param for the specific key that is an array.
+* It really isn't ideal when you have to work with arrays. It's usually better to use a dict with `{ <object.id>: <object> }`, but if you really need to add/remove elements in a array in a dumb-reducer, you can use the `subReducers` param for the specific key that is an array.

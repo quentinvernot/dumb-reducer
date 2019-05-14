@@ -3,7 +3,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import deepFreeze from 'deep-freeze';
 
-import makeDumbReducer from '../src';
+import makeDumbReducer from '../src/makeDumbReducer';
 
 const initialState = deepFreeze({ a: 'a', b: { b1: 'b1', b2: 2 } });
 const goodPrefix = 'goodPrefix';
