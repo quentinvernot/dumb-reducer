@@ -1,6 +1,6 @@
 {
   "name": "dumb-reducer",
-  "version": "1.0.10",
+  "version": "2.0.0",
   "description": "A generic redux reducer for simple cases",
   "main": "lib/index.js",
   "module": "es/index.js",
