@@ -19,7 +19,7 @@ function makeDumbReducer(prefix: string, initialState: Object = {}, subReducers:
   return function (state: Object = initialState, { type, ...payload }: { type: string } = {}) {
     if (type && startsWith(type, prefixAndSeparator)) {
       const unprefixedType = type.substring(prefixAndSeparator.length);
-      const key = find(keys, key => startsWith(unprefixedType, key));
+      const key = find(keys, key => startsWith(unprefixedType, key + '/'));
 
       if (key)
         return { ...state, [key]: { ...subReducers[key](state[key], { type: unprefixedType, ...payload }) } };

@@ -186,7 +186,7 @@ dispatch(actions.users.add(selfUser));
 
 ## Quirks and limitations
 
-* `<prefix>/stuff` is a valid action type, `<prefix>_stuff` and `<prefix>` are not. The `/` is expected.
+* `<prefix>/stuff` is a valid action type, `<prefix>_stuff` and `<prefix>` are not. The `/` is expected. This is also true when using sub-reducers, `<prefix>/<subprefix>/stuff` is valid while `<prefix>/<subprefix>` is not.
 * You can put dumb-reducers in your dumb-reducer, although this expects a static state structure. It doesn't work if you have a dynamically changing list objects (like `{ <user id>: <user> }`). You'll need something a bit smarter if you want to, say, update the email of a user in your local redux-user-cache without putting the whole user in the action.
 * You can't have a key called `type` in the state without using sub-reducers.
 * It really isn't ideal when you have to work with arrays. It's usually better to use a dict with `{ <object.id>: <object> }`, but if you really need to add/remove elements in a array in a dumb-reducer, you can use the `subReducers` param for the specific key that is an array.

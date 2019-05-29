@@ -51,9 +51,10 @@ describe('makeDumbReducer', () => {
 
   it('should run the given subreducer if the type matches', () => {
     const c = 'c';
-    const subreducer = (state, payload) => ({ ...state, c: payload.c });
-    const reducer = makeDumbReducer(goodPrefix, undefined, { sub: subreducer });
-    const action = { type: 'goodPrefix/sub', c };
+    const goodSubreducer = (state, payload) => ({ ...state, c: payload.c });
+    const badSubreducer = () => { throw new Error('This should not have been called'); };
+    const reducer = makeDumbReducer(goodPrefix, undefined, { sub: goodSubreducer, sub2: badSubreducer });
+    const action = { type: 'goodPrefix/sub/stuff', c };
     expect(reducer(initialState, action)).to.deep.equal({ ...initialState, sub: { c } });
   });
 
@@ -61,7 +62,7 @@ describe('makeDumbReducer', () => {
     const c = 'c';
     const subreducer = state => state;
     const reducer = makeDumbReducer(goodPrefix, undefined, { sub: subreducer });
-    const action = { type: 'goodPrefix/sub', c };
+    const action = { type: 'goodPrefix/sub/stuff', c };
     expect(reducer(initialState, action)).to.deep.equal({ ...initialState, sub: {} });
   });
 });
