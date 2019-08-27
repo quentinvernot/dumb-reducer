@@ -22,22 +22,22 @@
     ".flowconfig"
   ],
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/plugin-transform-flow-comments": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/register": "^7.4.4",
-    "babel-eslint": "^10.0.1",
+    "@babel/cli": "7.5.5",
+    "@babel/core": "7.5.5",
+    "@babel/plugin-transform-flow-comments": "7.5.5",
+    "@babel/preset-env": "7.5.5",
+    "@babel/register": "7.5.5",
+    "babel-eslint": "10.0.3",
     "chai": "4.2.0",
     "deep-freeze": "^0.0.1",
-    "eslint": "^6.0.1",
+    "eslint": "6.2.2",
     "eslint-plugin-chai-expect": "2.0.1",
     "eslint-plugin-chai-friendly": "^0.4.1",
-    "eslint-plugin-flowtype": "3.11.1",
+    "eslint-plugin-flowtype": "4.2.0",
     "eslint-plugin-import": "2.18.0",
     "eslint-plugin-mocha-no-only": "1.1.0",
     "flow": "^0.2.3",
-    "flow-bin": "0.102.0",
-    "mocha": "6.1.4"
+    "flow-bin": "0.106.2",
+    "mocha": "6.2.0"
   }
 }
